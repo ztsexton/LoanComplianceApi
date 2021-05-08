@@ -8,7 +8,7 @@ namespace LoanComplianceApi.LoanCompliance.ComplianceChecks
 {
     public class VirginiaFeeValidation : FeeValidatorBase
     {
-        private const decimal MaxPercentage = 7.00m;
+        private const decimal MaxPercentage = .07m;
 
         public override State State { get; } = State.VA;
 

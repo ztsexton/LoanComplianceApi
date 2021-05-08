@@ -46,6 +46,8 @@ namespace LoanComplianceApi
             services.AddScoped<IValidator, VirginiaFeeValidation>();
             services.AddScoped<IValidator, VirginiaAprValidation>();
             services.AddScoped<IValidator, NewYorkAprValidation>();
+            services.AddScoped<IValidator, MarylandFeeValidation>();
+            services.AddScoped<IValidator, MarylandAprValidation>();
             services.AddScoped<IComplianceEngine, ComplianceEngine>();
         }
 
