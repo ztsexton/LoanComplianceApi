@@ -6,7 +6,7 @@ using LoanComplianceApi.LoanCompliance;
 
 namespace LoanComplianceApi.LoanCompliance.ComplianceChecks
 {
-    public class AprValidatorBase : BaseValidator
+    public class AprValidatorBase : ValidatorBase
     {
 
         protected virtual ComplianceCheck ComplianceCheck { get; set; } = new ComplianceCheck { ComplianceType = ValidationType.AprValidation };

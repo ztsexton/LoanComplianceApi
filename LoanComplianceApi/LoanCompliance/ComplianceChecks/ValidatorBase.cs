@@ -6,7 +6,7 @@ using LoanComplianceApi.LoanCompliance;
 
 namespace LoanComplianceApi.LoanCompliance.ComplianceChecks
 {
-    public abstract class BaseValidator : IValidator
+    public abstract class ValidatorBase : IValidator
     {
         public virtual State State => throw new NotImplementedException();
 
