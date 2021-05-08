@@ -13,23 +13,21 @@ namespace LoanComplianceApi.LoanCompliance.ComplianceChecks
         public override State State { get; } = State.VA;
 
         public override ComplianceCheck Validate(Loan loan)
-        { 
-            Fee floodCertificationFee = loan.Fees.SingleOrDefault(fee => fee.FeeType == FeeType.FloodCertification) ?? new Fee { Amount = 0 };
-            Fee processingFee = loan.Fees.SingleOrDefault(fee => fee.FeeType == FeeType.Processing) ?? new Fee {Amount = 0};
-            Fee settlementFee = loan.Fees.SingleOrDefault(fee => fee.FeeType == FeeType.Settlement) ?? new Fee {Amount = 0};
-
-            decimal fees = floodCertificationFee.Amount + processingFee.Amount + settlementFee.Amount;
-
-            if (fees / loan.LoanAmount < MaxPercentage)
-            {
-                ComplianceCheck.Passed = true;
-            }
-            else
-            {
-                ComplianceCheck.Passed = false;
-            }
+        {
+            decimal fees = CalculateFees(loan);
+            ComplianceCheck.Passed = base.CheckFeeCompliance(loan.LoanAmount, fees, MaxPercentage);
 
             return ComplianceCheck;
+        }
+
+        private static decimal CalculateFees(Loan loan)
+        {
+            Fee floodCertificationFee = loan.Fees.SingleOrDefault(fee => fee.FeeType == FeeType.FloodCertification) ?? new Fee { Amount = 0 };
+            Fee processingFee = loan.Fees.SingleOrDefault(fee => fee.FeeType == FeeType.Processing) ?? new Fee { Amount = 0 };
+            Fee settlementFee = loan.Fees.SingleOrDefault(fee => fee.FeeType == FeeType.Settlement) ?? new Fee { Amount = 0 };
+
+            decimal fees = floodCertificationFee.Amount + processingFee.Amount + settlementFee.Amount;
+            return fees;
         }
     }
 }
