@@ -7,8 +7,8 @@ namespace LoanComplianceApi.LoanCompliance.ComplianceChecks
 {
     public class NewYorkAprValidation : AprValidatorBase
     {
-        private const decimal PrimaryOccupancyApr = 6.00m;
-        private const decimal SecondaryOccupancyApr = 8.00m;
+        private const decimal PrimaryOccupancyApr = .06m;
+        private const decimal SecondaryOccupancyApr = .08m;
 
         public override State State { get; } = State.NY;
 
