@@ -1,7 +1,10 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text.Json.Serialization;
 using System.Threading.Tasks;
+using LoanComplianceApi.LoanCompliance.ComplianceEngine;
+using LoanComplianceApi.LoanCompliance.Validations;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -28,12 +31,21 @@ namespace LoanComplianceApi
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddControllers();
+            services.AddControllers()
+                .AddJsonOptions(options =>
+                {
+                    options.JsonSerializerOptions.Converters.Add(new JsonStringEnumConverter());
+                });
+
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "LoanComplianceApi", Version = "v1" });
             });
             services.AddHealthChecks();
+
+            services.AddScoped<IValidator, VirginiaFeeValidation>();
+            services.AddScoped<IValidator, VirginiaAprValidation>();
+            services.AddScoped<IComplianceEngine, ComplianceEngine>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
