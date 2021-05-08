@@ -7,13 +7,13 @@ namespace LoanComplianceApi.LoanCompliance.ComplianceChecks
 {
     public class MarylandAprValidation : AprValidatorBase
     {
-        private const decimal Rate = 4.00m;
+        private const decimal Rate = .04m;
 
         public override State State { get; } = State.MD;
 
         public override ComplianceCheck Validate(Loan loan)
         {
-            ComplianceCheck.Passed = loan.Apr < Rate ? true : false;
+            ComplianceCheck.Passed = base.ValidateApr(loan.Apr, Rate);
             return ComplianceCheck;
         }
     }

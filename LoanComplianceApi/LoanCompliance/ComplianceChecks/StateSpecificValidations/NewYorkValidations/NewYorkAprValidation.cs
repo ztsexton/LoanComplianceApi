@@ -17,7 +17,7 @@ namespace LoanComplianceApi.LoanCompliance.ComplianceChecks
             if (loan.LoanType == LoanType.Conventional)
             {
                 decimal rate = loan.PrimaryOccupancy ? PrimaryOccupancyApr : SecondaryOccupancyApr;
-                ComplianceCheck.Passed = loan.Apr < rate ? true : false;
+                ComplianceCheck.Passed = base.ValidateApr(loan.Apr, rate);
             }
             else
             {

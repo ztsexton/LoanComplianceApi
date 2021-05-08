@@ -11,5 +11,10 @@ namespace LoanComplianceApi.LoanCompliance.ComplianceChecks
 
         protected virtual ComplianceCheck ComplianceCheck { get; set; } = new ComplianceCheck { ComplianceType = ValidationType.AprValidation };
         public ValidationType ValidationType { get; } = ValidationType.AprValidation;
+
+        public virtual bool ValidateApr(decimal loanApr, decimal maxApr)
+        {
+            return loanApr <= maxApr;
+        }
     }
 }
