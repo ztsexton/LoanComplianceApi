@@ -16,14 +16,24 @@ namespace LoanComplianceApi.Test
         private readonly IEnumerable<IValidator> _validators;
         public StateComplianceValidationTests()
         {
+            ServiceProvider serviceProvider = CreateServiceProviderForEngine();
+
+            _validators = serviceProvider.GetServices<IValidator>();
+        }
+        private static ServiceProvider CreateServiceProviderForEngine()
+        {
             var services = new ServiceCollection();
             services.AddScoped<IValidator, VirginiaFeeValidation>();
             services.AddScoped<IValidator, VirginiaAprValidation>();
             services.AddScoped<IValidator, NewYorkAprValidation>();
+            services.AddScoped<IValidator, MarylandFeeValidation>();
+            services.AddScoped<IValidator, MarylandAprValidation>();
+            services.AddScoped<IValidator, CaliforniaAprValidation>();
+            services.AddScoped<IValidator, CaliforniaFeeValidation>();
+            services.AddScoped<IValidator, FloridaFeeValidation>();
 
             var serviceProvider = services.BuildServiceProvider();
-
-            _validators = serviceProvider.GetServices<IValidator>();
+            return serviceProvider;
         }
 
         [Fact]
