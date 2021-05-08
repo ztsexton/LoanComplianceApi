@@ -2,6 +2,8 @@
 {
     public enum LoanType
     {
-        Conventional
+        Conventional,
+        Fha,
+        VA
     }
 }
