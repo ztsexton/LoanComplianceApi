@@ -12,7 +12,6 @@ namespace LoanComplianceApi.LoanCompliance
         public decimal LoanAmount { get; set; }
         public decimal Apr { get; set; }
         public List<Fee> Fees { get; set; }
-        public decimal FeePercentage { get; set; }
         public LoanType LoanType { get; set; }
         public bool PrimaryOccupancy { get; set; }
     }
