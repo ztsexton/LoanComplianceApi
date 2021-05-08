@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text.Json.Serialization;
 using System.Threading.Tasks;
 using LoanComplianceApi.LoanCompliance.ComplianceEngine;
-using LoanComplianceApi.LoanCompliance.Validations;
+using LoanComplianceApi.LoanCompliance.ComplianceChecks;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;

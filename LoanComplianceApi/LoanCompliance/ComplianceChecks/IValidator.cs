@@ -1,6 +1,6 @@
 ﻿using LoanComplianceApi.LoanCompliance;
 
-namespace LoanComplianceApi.LoanCompliance.Validations
+namespace LoanComplianceApi.LoanCompliance.ComplianceChecks
 {
     public interface IValidator
     {

@@ -4,7 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using LoanComplianceApi.LoanCompliance;
 
-namespace LoanComplianceApi.LoanCompliance.Validations
+namespace LoanComplianceApi.LoanCompliance.ComplianceChecks
 {
     public class FeeValidatorBase : BaseValidator
     {

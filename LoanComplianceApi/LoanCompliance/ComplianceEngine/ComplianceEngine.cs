@@ -2,8 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using LoanComplianceApi.LoanCompliance.Validations;
-using LoanComplianceApi.LoanCompliance;
+using LoanComplianceApi.LoanCompliance.ComplianceChecks;
 
 namespace LoanComplianceApi.LoanCompliance.ComplianceEngine
 {
