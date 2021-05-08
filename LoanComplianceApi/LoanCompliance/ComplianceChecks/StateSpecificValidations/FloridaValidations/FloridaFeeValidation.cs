@@ -7,7 +7,7 @@ namespace LoanComplianceApi.LoanCompliance.ComplianceChecks
 {
     public class FloridaFeeValidation : FeeValidatorBase
     {
-        public override State State { get; } = State.VA;
+        public override State State { get; } = State.FL;
         private readonly List<FeeType> _feeTypes = new List<FeeType> { FeeType.FloodCertification, FeeType.Application, FeeType.TitleSearch };
 
         public override ComplianceCheck Validate(Loan loan)
