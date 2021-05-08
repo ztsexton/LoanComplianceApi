@@ -30,18 +30,7 @@ namespace LoanComplianceApi.Test
         public void ValidNewYorkLoanReturnsValidResult()
         {
             var sut = new ComplianceEngine(_validators);
-            var loan = new Loan
-            {
-                Apr = .05m,
-                LoanAmount = 100000m,
-                Fees = new List<Fee>
-                { 
-                    new Fee { Amount = 50, FeeType = FeeType.Application }
-                },
-                LoanType = LoanType.Conventional,
-                PrimaryOccupancy = true,
-                State = State.NY
-            };
+            var loan = CreateTestLoan(750000, .05m, State.NY, LoanType.Conventional);
 
             var expected = new LoanComplianceResult
             {
@@ -55,6 +44,112 @@ namespace LoanComplianceApi.Test
             var actual = sut.Validate(loan);
 
             Assert.Equal(actual.GetHashCode(), expected.GetHashCode());
+        }
+
+        [Fact]
+        public void ValidVirginiaConventionalLoanReturnsValidResult()
+        {
+            var sut = new ComplianceEngine(_validators);
+            var loan = CreateTestLoan(750000, .05m, State.VA, LoanType.Conventional);
+
+            var expected = new LoanComplianceResult
+            {
+                IsCompliant = true,
+                ComplianceChecks = new List<ComplianceCheck>
+                {
+                    new ComplianceCheck { ComplianceType = ValidationType.AprValidation, Passed = true },
+
+                    new ComplianceCheck { ComplianceType = ValidationType.FeeValidation, Passed = true }
+                }
+            };
+
+            var actual = sut.Validate(loan);
+
+            Assert.Equal(actual.GetHashCode(), expected.GetHashCode());
+        }
+
+        [Fact]
+        public void ValidVirginiaFhaLoanReturnsValidResult()
+        {
+            var sut = new ComplianceEngine(_validators);
+            var loan = CreateTestLoan(750000, .05m, State.VA, LoanType.Fha);
+
+            var expected = new LoanComplianceResult
+            {
+                IsCompliant = true,
+                ComplianceChecks = new List<ComplianceCheck>
+                {
+                    new ComplianceCheck { ComplianceType = ValidationType.AprValidation, Passed = true },
+
+                    new ComplianceCheck { ComplianceType = ValidationType.FeeValidation, Passed = true }
+                }
+            };
+
+            var actual = sut.Validate(loan);
+
+            Assert.Equal(actual.GetHashCode(), expected.GetHashCode());
+        }
+
+        [Fact]
+        public void ValidVirginiaVALoanReturnsValidResult()
+        {
+            var sut = new ComplianceEngine(_validators);
+            var loan = CreateTestLoan(750000, .05m, State.VA, LoanType.VA);
+
+            var expected = new LoanComplianceResult
+            {
+                IsCompliant = true,
+                ComplianceChecks = new List<ComplianceCheck>
+                {
+                    new ComplianceCheck { ComplianceType = ValidationType.AprValidation, Passed = true },
+
+                    new ComplianceCheck { ComplianceType = ValidationType.FeeValidation, Passed = true }
+                }
+            };
+
+            var actual = sut.Validate(loan);
+
+            Assert.Equal(actual.GetHashCode(), expected.GetHashCode());
+        }
+
+        [Fact]
+        public void ExcessiveFeesVirginiaVALoanReturnsValidResult()
+        {
+            var sut = new ComplianceEngine(_validators);
+            var loan = CreateTestLoan(750000, .05m, State.VA, LoanType.VA);
+            var fee = new Fee { FeeType = FeeType.FloodCertification, Amount = 100000 };
+            loan.Fees.Add(fee);
+
+            var expected = new LoanComplianceResult
+            {
+                IsCompliant = false,
+                ComplianceChecks = new List<ComplianceCheck>
+                {
+                    new ComplianceCheck { ComplianceType = ValidationType.AprValidation, Passed = true },
+
+                    new ComplianceCheck { ComplianceType = ValidationType.FeeValidation, Passed = false }
+                }
+            };
+
+            var actual = sut.Validate(loan);
+
+            Assert.Equal(actual.GetHashCode(), expected.GetHashCode());
+        }
+
+        private Loan CreateTestLoan(decimal amount, decimal apr, State state, LoanType loanType)
+        {
+            return new Loan
+            {
+                Apr = apr,
+                LoanAmount = amount,
+                Fees = new List<Fee>
+                {
+                    new Fee { Amount = 50, FeeType = FeeType.Application }
+                },
+                LoanType = loanType,
+                PrimaryOccupancy = true,
+                State = state
+            };
         }
     }
 }
