@@ -5,11 +5,11 @@ using System.Threading.Tasks;
 
 namespace LoanComplianceApi.LoanCompliance.ComplianceChecks
 {
-    public class MarylandFeeValidation : FeeValidatorBase
+    public class CaliforniaFeeValidation : FeeValidatorBase
     {
-        public override State State { get; } = State.MD;
+        public override State State { get; } = State.CA;
 
-        private readonly List<FeeType> _feeTypes = new List<FeeType> { FeeType.Application, FeeType.CreditReport };
+        private readonly List<FeeType> _feeTypes = new List<FeeType> { FeeType.Application, FeeType.Settlement };
 
         public override ComplianceCheck Validate(Loan loan)
         {
@@ -23,13 +23,17 @@ namespace LoanComplianceApi.LoanCompliance.ComplianceChecks
 
         private decimal GetMaxPercentage(decimal loanAmount)
         {
-            if (loanAmount <= 200000.00m)
+            if (loanAmount <= 50000.00m)
+            {
+                return .03m;
+            }
+            else if (loanAmount <= 150000.00m)
             {
                 return .04m;
             }
             else
             {
-                return .06m;
+                return .05m;
             }
         }
     }

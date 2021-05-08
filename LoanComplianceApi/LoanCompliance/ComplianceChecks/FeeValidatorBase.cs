@@ -24,5 +24,17 @@ namespace LoanComplianceApi.LoanCompliance.ComplianceChecks
             }
         }
 
+        public virtual decimal CalculateFees(List<FeeType> feeTypes, Loan loan)
+        {
+            decimal fees = 0m;
+            foreach (var feeType in feeTypes)
+            {
+                var fee = loan.Fees.SingleOrDefault(fee => fee.FeeType == feeType) ?? new Fee { Amount = 0m };
+                fees += fee.Amount;
+            }
+
+            return fees;
+        }
+
     }
 }
